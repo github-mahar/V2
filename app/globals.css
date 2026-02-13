@@ -1,0 +1,266 @@
+@import "tailwindcss";
+
+/* ============================================================
+   THE CYBER-TERMINAL — DESIGN SYSTEM
+   Follows: design.md, design-enforcement.md, animation-manifest.md
+   ============================================================ */
+
+/* ---------------------
+   CSS VARIABLES (STRICT — design.md §3)
+   --------------------- */
+:root {
+  /* Base Colors */
+  --color-bg-primary: #050505;
+  --color-bg-secondary: #0A0A0A;
+  --color-surface: #1A1A1A;
+
+  /* Accent Colors */
+  --color-accent-primary: #00FFFF;
+  --color-accent-secondary: #FF007F;
+
+  /* Text Colors */
+  --color-text-primary: #EAEAEA;
+  --color-text-muted: #9A9A9A;
+
+  /* Borders */
+  --color-border: #2A2A2A;
+  --color-border-hover: #00FFFF;
+
+  /* Spacing System (design-enforcement.md §2) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Grid */
+  --grid-size: 40px;
+  --grid-opacity: 0.04;
+}
+
+/* ---------------------
+   TAILWIND v4 THEME TOKENS
+   --------------------- */
+@theme inline {
+  --color-bg-primary: var(--color-bg-primary);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-surface: var(--color-surface);
+  --color-accent: var(--color-accent-primary);
+  --color-accent-secondary: var(--color-accent-secondary);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-muted: var(--color-text-muted);
+  --color-border: var(--color-border);
+  --color-border-hover: var(--color-border-hover);
+  --font-heading: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+/* ---------------------
+   BASE STYLES
+   --------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------------------
+   BACKGROUND GRID (design.md §5.1)
+   Very low opacity (3–8%), thin 1px lines
+   Fixed across all pages
+   --------------------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(234, 234, 234, var(--grid-opacity)) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(234, 234, 234, var(--grid-opacity)) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+/* Content must be above grid */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------
+   TYPOGRAPHY (design.md §4)
+   --------------------- */
+
+/* Headings — Heavy Sans-Serif, ALL CAPS */
+h1, h2, h3, h4 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 2px;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: 1.5px;
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  letter-spacing: 1px;
+}
+
+/* Body — Readable, medium weight */
+p {
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+/* Monospace metadata labels (design.md §4.2) */
+.mono-label {
+  font-family: var(--font-jetbrains-mono), 'Courier New', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.mono-value {
+  font-family: var(--font-jetbrains-mono), 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--color-accent-primary);
+}
+
+/* ---------------------
+   SELECTION
+   --------------------- */
+::selection {
+  background: var(--color-accent-primary);
+  color: var(--color-bg-primary);
+}
+
+/* ---------------------
+   SCROLLBAR (System aesthetic)
+   --------------------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-primary);
+}
+
+/* ---------------------
+   ANIMATIONS (animation-manifest.md)
+   --------------------- */
+
+/* Status indicator pulse (2–3s cycle, subtle) */
+@keyframes systemPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+  }
+}
+
+.pulse-indicator {
+  animation: systemPulse 2.5s ease-in-out infinite;
+}
+
+/* Scanline effect (very subtle, system atmosphere) */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* ---------------------
+   FOCUS STATES (accessibility)
+   --------------------- */
+*:focus-visible {
+  outline: 1px solid var(--color-accent-primary);
+  outline-offset: 2px;
+}
+
+/* ---------------------
+   LINK BASE STYLES
+   --------------------- */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-accent-primary);
+}
+
+/* ---------------------
+   UTILITY CLASSES
+   --------------------- */
+.text-accent {
+  color: var(--color-accent-primary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.border-system {
+  border: 1px solid var(--color-border);
+}
+
+.glow-accent {
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+}
+
+.glow-accent-hover:hover {
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.25);
+}
+
+/* Container */
+.container-system {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .container-system {
+    padding-left: var(--space-base);
+    padding-right: var(--space-base);
+  }
+}
