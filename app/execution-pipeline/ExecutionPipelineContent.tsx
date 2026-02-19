@@ -36,6 +36,7 @@ export default function ExecutionPipelineContent() {
                                 duration={entry.duration}
                                 isCurrent={entry.isCurrent}
                                 isLast={index === experience.length - 1}
+                                description={entry.description}
                             />
                         ))}
                     </div>

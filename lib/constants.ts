@@ -27,14 +27,14 @@ export const SYSTEM_META = {
 export const SEO_DEFAULTS = {
     siteName: "Mahar GM — The Cyber-Terminal",
     siteUrl: "https://mahargm.dev",
-    defaultDescription: "Web Developer specializing in high-performance, scalable, and maintainable web applications. Building engineered systems, not just websites.",
+    defaultDescription: "Web Developer & Shopify Store Manager specializing in high-performance, scalable, and maintainable web applications. Building engineered systems, not just websites.",
     defaultTitle: "MAHAR GM // THE CYBER-TERMINAL",
 } as const;
 
 export const PAGE_METADATA = {
     home: {
         title: "MAHAR GM // THE CYBER-TERMINAL",
-        description: "Web Developer specializing in high-performance, scalable, and maintainable web applications.",
+        description: "Web Developer & Shopify Store Manager specializing in high-performance, scalable, and maintainable web applications.",
     },
     systemInfo: {
         title: "SYSTEM_INFO // MAHAR GM",

@@ -15,14 +15,12 @@ export default function PipelineNode({
     duration,
     isCurrent,
     isLast,
-}: PipelineNodeProps) {
+    description,
+}: PipelineNodeProps & { description?: string[] }) {
     return (
         <div className="flex" style={{ gap: "var(--space-lg)" }}>
             {/* Line + Node Dot */}
-            <div
-                className="flex flex-col items-center"
-                style={{ width: "20px", flexShrink: 0 }}
-            >
+            <div className="flex flex-col items-center" style={{ width: "20px", flexShrink: 0 }}>
                 {/* Dot */}
                 <div
                     className={isCurrent ? "pulse-indicator" : ""}
@@ -58,7 +56,7 @@ export default function PipelineNode({
             </div>
 
             {/* Content */}
-            <div style={{ paddingBottom: isLast ? 0 : "var(--space-xl)" }}>
+            <div style={{ paddingBottom: isLast ? 0 : "var(--space-xl)", width: "100%" }}>
                 {/* Company */}
                 <h3
                     style={{
@@ -77,20 +75,35 @@ export default function PipelineNode({
                 </h3>
 
                 {/* Role */}
-                <div
-                    className="mono-label"
-                    style={{ marginBottom: "var(--space-xs)" }}
-                >
+                <div className="mono-label" style={{ marginBottom: "var(--space-xs)" }}>
                     ROLE: <span className="mono-value">{role}</span>
                 </div>
 
                 {/* Duration */}
-                <div
-                    className="mono-label"
-                    style={{ marginBottom: "var(--space-sm)" }}
-                >
+                <div className="mono-label" style={{ marginBottom: "var(--space-sm)" }}>
                     DURATION: <span className="mono-value">{duration}</span>
                 </div>
+
+                {/* Description */}
+                {description && description.length > 0 && (
+                    <ul
+                        style={{
+                            listStyleType: "disc",
+                            paddingLeft: "var(--space-lg)",
+                            marginBottom: "var(--space-md)",
+                            color: "var(--color-text-muted)",
+                            fontFamily: "var(--font-jetbrains-mono)",
+                            fontSize: "0.85rem",
+                            lineHeight: 1.6,
+                        }}
+                    >
+                        {description.map((item, index) => (
+                            <li key={index} style={{ marginBottom: "var(--space-xs)" }}>
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                )}
 
                 {/* Current Badge */}
                 {isCurrent && (
